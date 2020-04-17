@@ -1,0 +1,70 @@
+#bg{
+    -fx-background-image: url('../img/img1.jpg');
+    -fx-background-size: 100% 100%;
+}
+#box{
+    -fx-effect: dropshadow(three-pass-box, rgba(170,170,170,0.6), 30, 0, 0, 0);
+}
+@font-face {
+    src: url('../font/Roboto-Regular.ttf');
+}
+
+@font-face {
+    src: url('../font/Roboto-Bold.ttf');
+}
+
+#text-roboto-normal {
+    -fx-font-family: "Roboto";
+}
+
+.text-roboto-normal-white{
+    -fx-font-family: "Roboto";
+}
+
+#text-roboto-bold {
+    -fx-font-family: "Roboto-Bold";
+}
+
+#user-logout{
+    -fx-background-image: url("../img/user.png")    ;
+}
+
+.menu-dashboard{
+    -fx-text-fill: #ffffff;
+    -fx-opacity: 0.6;
+    -fx-font-family: "Roboto";
+}
+
+.menu-dashboard:hover{
+    -fx-font-size: 16;
+    -fx-opacity: 0.95;
+}
+
+#dashboardIcon{
+    -fx-background-image: url('../img/dashboard.png');
+}
+
+#pengajuanIcon{
+    -fx-background-image: url('../img/document.png');
+}
+
+#verifiedIcon{
+    -fx-background-image: url('../img/test.png');
+}
+
+.buttonWithImage {
+    -fx-padding: 0px 80px;
+    -fx-alignment: center-left;
+    -fx-background-size: 17px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 20%;
+}
+
+.boxDashboar{
+    -fx-effect: dropshadow(three-pass-box, rgba(170,170,170,0.6), 30, 0, 0, 0);
+    -fx-border-radius: 50px;
+}
+
+.text-roboto{
+    -fx-font-family: Roboto;
+}

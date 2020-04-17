@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="612.0" maxWidth="1078.0" prefHeight="612.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashboardController">
+   <children>
+      <HBox layoutX="35.0" layoutY="82.0" prefHeight="108.0" prefWidth="770.0" stylesheets="@resource/css/style.css">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="108.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="boxDashboar" width="230.0" />
+                  <Text fill="#4e73df" layoutX="18.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Banyak Permintaan">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#4e73df" layoutX="20.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="50">
+                     <font>
+                        <Font name="Arial" size="30.0" />
+                     </font>
+                  </Text>
+               </children>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="108.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="boxDashboar" width="230.0" />
+                  <Text fill="#28a745" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Yang Telah Selesai">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#1cc88a" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="20">
+                     <font>
+                        <Font name="Arial" size="30.0" />
+                     </font>
+                  </Text>
+               </children>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="108.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="boxDashboar" width="230.0" />
+                  <Text fill="#f6c23e" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Yang Sedang Diproses">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#f6c23e" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="25">
+                     <font>
+                        <Font name="Arial" size="30.0" />
+                     </font>
+                  </Text>
+               </children>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="108.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="boxDashboar" width="230.0" />
+                  <Text fill="#e74a3b" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Yang belum diverifikasi">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#e74a3b" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="5">
+                     <font>
+                        <Font name="Arial" size="30.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

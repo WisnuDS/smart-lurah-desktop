@@ -31,7 +31,7 @@
 
 .menu-dashboard{
     -fx-text-fill: #ffffff;
-    -fx-opacity: 0.6;
+    /*-fx-opacity: 0.6;*/
     -fx-font-family: "Roboto";
 }
 
@@ -52,6 +52,14 @@
     -fx-background-image: url('../img/test.png');
 }
 
+#userVerifiedIcon{
+    -fx-background-image: url('../img/verified.png');
+}
+
+#broadcast{
+    -fx-background-image: url('../img/send.png');
+}
+
 .buttonWithImage {
     -fx-padding: 0px 80px;
     -fx-alignment: center-left;
@@ -67,4 +75,23 @@
 
 .text-roboto{
     -fx-font-family: Roboto;
+}
+
+.text-roboto-bold{
+    -fx-font-family: Roboto-Bold;
+}
+
+.jfx-text-field {
+    -fx-prompt-text-fill: #c0c0c0;
+}
+
+.jfx-password-field {
+    -fx-prompt-text-fill: #c0c0c0;
+}
+
+.split-pane:horizontal > .split-pane-divider{
+    -fx-background-color: transparent;
+}
+.split-pane:horizontal{
+    -fx-border-color: rgb(244, 244, 244);
 }

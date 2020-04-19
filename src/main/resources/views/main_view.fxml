@@ -28,7 +28,7 @@
     <AnchorPane fx:id="containerView" layoutX="274.0" layoutY="102.0" prefHeight="612.0" prefWidth="1078.0" />
    <VBox layoutX="-1.0" layoutY="124.0" prefHeight="404.0" prefWidth="256.0">
       <children>
-          <JFXButton id="dashboardIcon" fx:id="dashboardButton" focusTraversable="false" onAction="#dashboardClicked" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Dashboard" textAlignment="CENTER" textFill="WHITE">
+          <JFXButton id="dashboardIcon" fx:id="dashboardButton" focusTraversable="false" onAction="#dashboardClicked" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Dashboard" textAlignment="CENTER" textFill="WHITE">
               <font>
                   <Font size="16.0" />
               </font>
@@ -40,7 +40,7 @@
                <String fx:value="buttonWithImage" />
             </styleClass>
           </JFXButton>
-          <JFXButton id="pengajuanIcon" focusTraversable="false" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Pengajuan" textAlignment="CENTER" textFill="WHITE">
+          <JFXButton id="pengajuanIcon" fx:id="btnPengajuan" focusTraversable="false" onAction="#pengajuanPage" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Pengajuan" textAlignment="CENTER" textFill="WHITE">
               <font>
                   <Font size="16.0" />
               </font>
@@ -52,7 +52,31 @@
                <String fx:value="buttonWithImage" />
             </styleClass>
           </JFXButton>
-         <JFXButton id="verifiedIcon" focusTraversable="false" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Kerjakan" textAlignment="CENTER" textFill="WHITE">
+         <JFXButton id="verifiedIcon" fx:id="btnKerjakan" focusTraversable="false" onAction="#kerjakanPage" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Kerjakan" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+            <styleClass>
+               <String fx:value="menu-dashboard" />
+               <String fx:value="buttonWithImage" />
+            </styleClass>
+         </JFXButton>
+         <JFXButton id="userVerifiedIcon" fx:id="btnRegistrasi" focusTraversable="false" onAction="#registrasiPage" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Registrasi" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+            <styleClass>
+               <String fx:value="menu-dashboard" />
+               <String fx:value="buttonWithImage" />
+            </styleClass>
+         </JFXButton>
+         <JFXButton id="broadcast" fx:id="btnBradcast" focusTraversable="false" onAction="#broadcastPage" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Broadcast" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="16.0" />
             </font>

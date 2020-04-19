@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="612.0" maxWidth="1078.0" prefHeight="612.0" prefWidth="1078.0" styleClass="text-roboto-bold" stylesheets="@resource/css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddAdminController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="512.0" layoutX="64.0" layoutY="49.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="boxDashboar" width="965.0" />
+      <Text fill="#4e73df" layoutX="491.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto-bold" text="Admin Baru">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <VBox layoutX="169.0" layoutY="179.0" prefHeight="200.0" prefWidth="378.0">
+         <children>
+            <JFXTextField fx:id="txtUsername" cache="true" labelFloat="true" pickOnBounds="false" prefHeight="24.0" prefWidth="378.0" promptText="Username" scaleShape="false" styleClass="text-roboto" stylesheets="@resource/css/style.css">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="txtFirstName" cache="true" labelFloat="true" prefHeight="24.0" prefWidth="378.0" promptText="Nama Depan" scaleShape="false" styleClass="text-roboto" stylesheets="@resource/css/style.css">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="txtLastName" cache="true" labelFloat="true" prefHeight="24.0" prefWidth="378.0" promptText="Nama Belakang" scaleShape="false" styleClass="text-roboto" stylesheets="@resource/css/style.css">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="txtEmail" cache="true" labelFloat="true" prefHeight="24.0" prefWidth="378.0" promptText="E-mail" scaleShape="false" styleClass="text-roboto" stylesheets="@resource/css/style.css">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXPasswordField fx:id="txtPassword" labelFloat="true" promptText="Password">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXPasswordField>
+            <JFXPasswordField fx:id="txtPassword2" labelFloat="true" onKeyTyped="#onPasswordTyped" promptText="Masukan Kembali Password" />
+         </children>
+      </VBox>
+      <JFXButton fx:id="btnSave" layoutX="483.0" layoutY="474.0" onAction="#saveAction" style="-fx-background-color: #4e73df;" styleClass="text-roboto" stylesheets="@resource/css/style.css" text="Simpan" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnCencel" layoutX="402.0" layoutY="475.0" onAction="#cancelAction" prefWidth="67.0" style="-fx-background-color: #e74a3b;" styleClass="text-roboto" stylesheets="@resource/css/style.css" text="Batal" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

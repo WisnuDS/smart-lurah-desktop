@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="612.0" maxWidth="1078.0" prefHeight="612.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FormController">
+   <children>
+      <StackPane fx:id="stackPane" prefHeight="616.0" prefWidth="1078.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <SplitPane dividerPositions="0.329608938547486, 0.8333333333333334" prefHeight="612.0" prefWidth="1078.0" stylesheets="@resource/css/style.css">
+              <items>
+                  <AnchorPane maxHeight="358.0" prefHeight="608.0" prefWidth="264.0" styleClass="boxDashboar" stylesheets="@resource/css/style.css">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="612.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
+                        <VBox layoutX="17.0" layoutY="59.0" prefHeight="499.0" prefWidth="324.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="59.0">
+                           <children>
+                              <JFXTextField fx:id="txtNomorSurat" labelFloat="true" prefHeight="0.0" prefWidth="358.0" promptText="Nomor Surat" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtNama" labelFloat="true" prefHeight="0.0" prefWidth="358.0" promptText="Nama" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtNomorKK" labelFloat="true" prefHeight="0.0" prefWidth="358.0" promptText="Nomor KK" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtTempatLahir" labelFloat="true" prefHeight="0.0" prefWidth="358.0" promptText="Tempat Lahir" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <DatePicker fx:id="tglLahir" prefHeight="26.0" prefWidth="327.0" promptText="Tanggal Lahir">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </DatePicker>
+                              <JFXComboBox fx:id="jnsKelamin" labelFloat="true" prefHeight="26.0" prefWidth="329.0" promptText="Jenis Kelamin" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXComboBox>
+                              <JFXComboBox fx:id="stsPerkawinan" labelFloat="true" prefHeight="26.0" prefWidth="329.0" promptText="Status Perkawinan" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXComboBox>
+                              <JFXComboBox fx:id="agama" labelFloat="true" prefHeight="26.0" prefWidth="329.0" promptText="Bangsa/Agama" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXComboBox>
+                              <JFXComboBox fx:id="golDarah" labelFloat="true" prefHeight="26.0" prefWidth="329.0" promptText="Gol. Darah" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXComboBox>
+                              <JFXTextField fx:id="pekerjaan" labelFloat="true" prefHeight="0.0" prefWidth="358.0" promptText="Pekerjaan" unFocusColor="#757575">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXTextArea fx:id="alamat" labelFloat="true" prefHeight="62.0" prefWidth="324.0" promptText="Alamat">
+                                 <VBox.margin>
+                                    <Insets bottom="18.0" />
+                                 </VBox.margin>
+                              </JFXTextArea>
+                              <JFXComboBox fx:id="jenisSurat" labelFloat="true" prefHeight="49.0" prefWidth="324.0" promptText="Jenis Surat" unFocusColor="#757575" />
+                           </children>
+                        </VBox>
+                        <Text fill="#4e73df" layoutX="115.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto-bold" text="Form Pengisian">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <JFXButton fx:id="btnBack" layoutX="10.0" layoutY="570.0" onAction="#goBack" text="Kembali">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton fx:id="btnSubmit" layoutX="275.0" layoutY="573.0" onAction="#submit" style="-fx-background-color: #4e73df;" stylesheets="@resource/css/style.css" text="Submit" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="525.0" prefHeight="608.0" prefWidth="525.0">
+                     <children>
+                        <Text fill="#4e73df" layoutX="32.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preview Berkas Persyaratan">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fx:id="imgPreview" fitHeight="499.0" fitWidth="524.0" layoutX="1.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="608.0" prefWidth="191.0">
+                     <children>
+                        <JFXListView fx:id="listFile" layoutX="-12.0" layoutY="93.0" prefHeight="608.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

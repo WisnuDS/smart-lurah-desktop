@@ -52,18 +52,6 @@
                <String fx:value="buttonWithImage" />
             </styleClass>
           </JFXButton>
-         <JFXButton id="verifiedIcon" fx:id="btnKerjakan" focusTraversable="false" onAction="#kerjakanPage" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Kerjakan" textAlignment="CENTER" textFill="WHITE">
-            <font>
-               <Font size="16.0" />
-            </font>
-            <cursor>
-               <Cursor fx:constant="HAND" />
-            </cursor>
-            <styleClass>
-               <String fx:value="menu-dashboard" />
-               <String fx:value="buttonWithImage" />
-            </styleClass>
-         </JFXButton>
          <JFXButton id="userVerifiedIcon" fx:id="btnRegistrasi" focusTraversable="false" onAction="#registrasiPage" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Registrasi" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="16.0" />

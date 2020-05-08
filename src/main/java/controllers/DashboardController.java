@@ -17,13 +17,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import models.AdminModel;
 
 public class DashboardController {
 
@@ -60,22 +55,16 @@ public class DashboardController {
         lastName.setCellValueFactory(userColumnStringCellDataFeatures -> userColumnStringCellDataFeatures.getValue().getValue().lastName);
 
         ObservableList<UserColumn> userColumns = FXCollections.observableArrayList();
-        userColumns.add(new UserColumn("Wisnu", "Wisnu", "Dewa", "Ardiansyahp32@gmail.com"));
-        userColumns.add(new UserColumn("Wisnu", "Wisnu", "Dewa", "Ardiansyahp32@gmail.com"));
-        userColumns.add(new UserColumn("Wisnu", "Wisnu", "Dewa", "Ardiansyahp32@gmail.com"));
-        userColumns.add(new UserColumn("Dewa", "Wisnu", "Dewa", "Ardiansyahp32@gmail.com"));
+        for (AdminModel model : AdminModel.getUserModels()){
+            userColumns.add(new UserColumn(model.getUsername(),model.getFirstName(),model.getLastName(),model.getEmail()));
+        }
 
         final TreeItem<UserColumn> root = new RecursiveTreeItem<UserColumn>(userColumns, RecursiveTreeObject::getChildren);
         tableUserDashboard.getColumns().setAll(username,email,firstName,lastName);
         tableUserDashboard.setRoot(root);
         tableUserDashboard.setShowRoot(false);
 
-    }
 
-    public void addColumn(String name){
-        JFXTreeTableColumn<UserColumn,String> username = new JFXTreeTableColumn<>("Username");
-        username.setPrefWidth(252);
-        username.setCellValueFactory(userColumnStringCellDataFeatures -> userColumnStringCellDataFeatures.getValue().getValue().username);
     }
 
     static class UserColumn extends RecursiveTreeObject<UserColumn> {

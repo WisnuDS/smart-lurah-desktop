@@ -1,20 +1,23 @@
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import helper.Context;
+import helper.Globe;
+import helper.State;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
@@ -25,12 +28,14 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
+import models.UserModel;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RegistrationController implements Initializable {
+    public static final String PAGE = "REGISTRATION_CONTROLLER";
 
     @FXML
     private JFXTreeTableView<RegistrationColumn> tableRegistration;
@@ -74,14 +79,18 @@ public class RegistrationController implements Initializable {
                             btn.setButtonType(JFXButton.ButtonType.FLAT);
                             btn.setBackground(new Background(new BackgroundFill(Color.valueOf("#4e73df"), CornerRadii.EMPTY,null)));
                             btn.setTextFill(Paint.valueOf("#ffffff"));
+                            btn.setCursor(Cursor.HAND);
                             btn.setOnAction(event -> {
                                 Node node = (Node) event.getSource();
-                                AnchorPane anchorPane = (AnchorPane) node.getParent().getParent().getParent().getParent().getParent().getParent().getParent();
-                                try {
-                                    anchorPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("../views/arrangement_file_view.fxml")));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                                JFXTreeTableRow<RegistrationColumn> row = (JFXTreeTableRow<RegistrationColumn>) node.getParent().getParent();
+                                String id = String.valueOf(row.getTreeItem().getValue().id);
+                                State state = new State();
+                                state.putItem("ID_SELECTED",id);
+                                state.putItem("FROM",RegistrationController.PAGE);
+                                Context context = new Context();
+                                context.putState("VIEW_DETAIL_USER_REGISTRATION",state);
+                                Globe.getGlobe().putContext("VERIFICATION",context);
+                                changeScene(event);
                             });
                             setGraphic(btn);
                         }
@@ -93,17 +102,27 @@ public class RegistrationController implements Initializable {
         };
 
         more.setCellFactory(settingColumn);
-
         ObservableList<RegistrationColumn> registrationColumns = FXCollections.observableArrayList();
-        registrationColumns.add(new RegistrationColumn("1","12345","Wisnu","http://haha.com","http://haha.com",true));
-        registrationColumns.add(new RegistrationColumn("1","12345","Wisnu","http://haha.com","http://haha.com",true));
-        registrationColumns.add(new RegistrationColumn("1","12345","Wisnu","http://haha.com","http://haha.com",true));
-        registrationColumns.add(new RegistrationColumn("1","12345","Wisnu","http://haha.com","http://haha.com",true));
+        for (UserModel model : UserModel.getUnregisteredUserModels()){
+            registrationColumns.add(new RegistrationColumn(model.getId(),model.getTelegramId(),model.getName(),model.getUrlKtpPhoto(),model.getUrlSelfPhoto(),model.isVerification()));
+        }
 
         TreeItem<RegistrationColumn> item = new RecursiveTreeItem<>(registrationColumns, RecursiveTreeObject::getChildren);
         tableRegistration.getColumns().setAll(id,telegramId,name,urlKtp,urlSelf,verified,more);
         tableRegistration.setRoot(item);
         tableRegistration.setShowRoot(false);
+    }
+
+    private void changeScene(ActionEvent event) {
+        Node node1 = (Node) event.getSource();
+        Scene scene = node1.getScene();
+        Node node = scene.lookup("#anchorpane");
+        AnchorPane anchorPane = (AnchorPane) node;
+        try {
+            anchorPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("../views/arrangement_file_view.fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     static class RegistrationColumn extends RecursiveTreeObject<RegistrationColumn> {

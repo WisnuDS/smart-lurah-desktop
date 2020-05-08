@@ -60,6 +60,10 @@
     -fx-background-image: url('../img/send.png');
 }
 
+#userManagement{
+    -fx-background-image: url('../img/interface.png');
+}
+
 .buttonWithImage {
     -fx-padding: 0px 80px;
     -fx-alignment: center-left;

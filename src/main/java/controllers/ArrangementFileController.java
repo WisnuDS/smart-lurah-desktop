@@ -1,7 +1,9 @@
 package controllers;
 
 import com.jfoenix.controls.*;
+import helper.Globe;
 import helper.Helper;
+import helper.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,7 @@ import java.util.Collection;
 import java.util.ResourceBundle;
 
 public class ArrangementFileController implements Initializable {
+    private String from;
 
     @FXML
     private StackPane stackPane;
@@ -45,7 +48,12 @@ public class ArrangementFileController implements Initializable {
 
     @FXML
     void goBack(ActionEvent event) {
-        changeScene(event,"arrangement_view");
+        if (from.equals(RegistrationController.PAGE)){
+            changeScene(event,"registration_view");
+        }else {
+            changeScene(event,"arrangement_view");
+        }
+
     }
 
     @Override
@@ -54,7 +62,10 @@ public class ArrangementFileController implements Initializable {
         listFile.getItems().add("Dada");
         listFile.getItems().add("Deee");
         listFile.getItems().add("yoi");
-
+        State state = Globe.getGlobe().getContext("VERIFICATION").getState("VIEW_DETAIL_USER_REGISTRATION");
+        String id = String.valueOf(state.getItem("ID_SELECTED"));
+        from = String.valueOf(state.getItem("FROM"));
+        System.out.println("Id Selected : "+id);
         listFile.getSelectionModel().selectedItemProperty().addListener((observableValue, s, t1) -> {
             String selectData = listFile.getSelectionModel().getSelectedItem();
             String path = "https://lh3.googleusercontent.com/proxy/jizElBpArw9-BgsxwTANBWgaf66XPPckUY4pVHGeF-3N-VqSMTU0BQKTiOD2TebucGVnPftkxSq_gswvGkOvzBROs084tGWUalXyRjJYLPovJHk6b9K7ZZu6to-EfytNogawceLw";

@@ -5,19 +5,17 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import helper.Helper;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
@@ -28,8 +26,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
+import models.ArrangementModel;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -78,6 +76,7 @@ public class ArrangementController implements Initializable {
                             btn.setButtonType(JFXButton.ButtonType.FLAT);
                             btn.setBackground(new Background(new BackgroundFill(Color.valueOf("#4e73df"), CornerRadii.EMPTY,null)));
                             btn.setTextFill(Paint.valueOf("#ffffff"));
+                            btn.setCursor(Cursor.HAND);
                             btn.setOnAction(event -> {
                                 Node node = (Node) event.getSource();
                                 AnchorPane anchorPane = (AnchorPane) node.getParent().getParent().getParent().getParent().getParent().getParent().getParent();
@@ -98,11 +97,9 @@ public class ArrangementController implements Initializable {
         more.setCellFactory(settingColumn);
 
         ObservableList<ArrangementColumn> arrangementColumns = FXCollections.observableArrayList();
-        arrangementColumns.add(new ArrangementColumn("1","20-12-2020","Wisnu","KTP",true,true));
-        arrangementColumns.add(new ArrangementColumn("1","20-12-2020","isnu","SIM",true,true));
-        arrangementColumns.add(new ArrangementColumn("1","20-12-2020","Dewa","STNK",true,true));
-        arrangementColumns.add(new ArrangementColumn("1","20-12-2020","hahah","KTP",true,true));
-        arrangementColumns.add(new ArrangementColumn("1","20-12-2020","Wisnu","KTP",true,true));
+        for (ArrangementModel model : ArrangementModel.getArrangements()){
+            arrangementColumns.add(new ArrangementColumn(model.getId(),model.getDate(),model.getName(),model.getTypeService(),model.isVerification(),model.isFinished()));
+        }
 
         TreeItem<ArrangementColumn> item = new RecursiveTreeItem<>(arrangementColumns, RecursiveTreeObject::getChildren);
         tableArrangement.getColumns().setAll(id,date,user,service,verified,finished,more);

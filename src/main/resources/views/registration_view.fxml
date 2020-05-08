@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="612.0" maxWidth="1078.0" prefHeight="612.0" prefWidth="1078.0" stylesheets="@resource/css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegistrationController">
+<AnchorPane id="anchorpane" maxHeight="612.0" maxWidth="1078.0" prefHeight="612.0" prefWidth="1078.0" stylesheets="@resource/css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegistrationController">
     <children>
         <JFXTreeTableView fx:id="tableRegistration" layoutX="43.0" layoutY="100.0" prefHeight="448.0" prefWidth="996.0" />
         <Text fill="#4e73df" layoutX="48.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto-bold" text="Data Pengajuan Registrasi">

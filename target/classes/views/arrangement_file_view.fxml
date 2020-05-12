@@ -34,7 +34,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </JFXButton>
-                        <JFXButton fx:id="btnDoing" disable="true" layoutX="105.0" layoutY="564.0" style="-fx-background-color: #4e73df; -fx-background-radius: 2px;" styleClass="text-roboto" stylesheets="@resource/css/style.css" text="Kerjakan" textFill="WHITE">
+                        <JFXButton fx:id="btnDoing" disable="true" layoutX="105.0" layoutY="564.0" onAction="#doing" style="-fx-background-color: #4e73df; -fx-background-radius: 2px;" styleClass="text-roboto" stylesheets="@resource/css/style.css" text="Kerjakan" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

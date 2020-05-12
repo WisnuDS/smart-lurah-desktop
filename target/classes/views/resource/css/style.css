@@ -64,6 +64,10 @@
     -fx-background-image: url('../img/interface.png');
 }
 
+#service{
+    -fx-background-image: url('../img/edit.png');
+}
+
 .buttonWithImage {
     -fx-padding: 0px 80px;
     -fx-alignment: center-left;

@@ -76,6 +76,18 @@
                <String fx:value="buttonWithImage" />
             </styleClass>
          </JFXButton>
+         <JFXButton id="service" fx:id="btnService" focusTraversable="false" onAction="#servicePage" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Pelayanan" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+            <styleClass>
+               <String fx:value="menu-dashboard" />
+               <String fx:value="buttonWithImage" />
+            </styleClass>
+         </JFXButton>
          <JFXButton id="broadcast" fx:id="btnBradcast" focusTraversable="false" onAction="#broadcastPage" opacity="0.6" prefHeight="41.0" prefWidth="257.0" stylesheets="@resource/css/style.css" text="Broadcast" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="16.0" />

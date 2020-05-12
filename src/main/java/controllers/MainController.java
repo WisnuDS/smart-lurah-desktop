@@ -41,6 +41,9 @@ public class MainController implements Initializable {
     private JFXButton btnUsers;
 
     @FXML
+    private JFXButton btnService;
+
+    @FXML
     private JFXButton btnBradcast;
 
     @FXML
@@ -82,6 +85,11 @@ public class MainController implements Initializable {
 ////        btnKerjakan.setOpacity(0.6);
 //        btnPengajuan.setOpacity(0.6);
 //        btnRegistrasi.setOpacity(0.6);
+    }
+
+    @FXML
+    void servicePage(ActionEvent event) {
+        changeView("service_and_requirement_view");
     }
 
     public void changeView(String view){

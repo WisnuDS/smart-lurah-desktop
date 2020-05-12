@@ -1,10 +1,10 @@
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import helper.Context;
+import helper.Globe;
+import helper.State;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -55,20 +55,20 @@ public class ManagementUserController implements Initializable {
         JFXTreeTableColumn<ManagementUserController.ManagementUserColumn,String> lastName = new JFXTreeTableColumn<>("Url Foto Diri");
         lastName.setPrefWidth(166);
         lastName.setCellValueFactory(userColumnStringCellDataFeatures -> userColumnStringCellDataFeatures.getValue().getValue().urlSelfPhoto);
-        JFXTreeTableColumn<ManagementUserController.ManagementUserColumn,Boolean> status = new JFXTreeTableColumn<>("Verifikasi");
+        JFXTreeTableColumn<ManagementUserController.ManagementUserColumn,String> status = new JFXTreeTableColumn<>("Status");
         status.setPrefWidth(166);
-        status.setCellValueFactory(managementUserColumnBooleanCellDataFeatures -> managementUserColumnBooleanCellDataFeatures.getValue().getValue().verified);
-        JFXTreeTableColumn<ManagementUserController.ManagementUserColumn,Boolean> more = new JFXTreeTableColumn<>("Edit");
+        status.setCellValueFactory(managementUserColumnStringCellDataFeatures -> managementUserColumnStringCellDataFeatures.getValue().getValue().status);
+        JFXTreeTableColumn<ManagementUserController.ManagementUserColumn,String> more = new JFXTreeTableColumn<>("Edit");
         more.setPrefWidth(100);
-        more.setCellValueFactory(arrangementColumnBooleanCellDataFeatures -> arrangementColumnBooleanCellDataFeatures.getValue().getValue().verified);
-        Callback<TreeTableColumn<ManagementUserColumn,Boolean>, TreeTableCell<ManagementUserColumn, Boolean>> settingColumn = new Callback<TreeTableColumn<ManagementUserColumn, Boolean>, TreeTableCell<ManagementUserColumn, Boolean>>() {
+        more.setCellValueFactory(managementUserColumnStringCellDataFeatures -> managementUserColumnStringCellDataFeatures.getValue().getValue().status);
+        Callback<TreeTableColumn<ManagementUserColumn,String>, TreeTableCell<ManagementUserColumn, String>> settingColumn = new Callback<TreeTableColumn<ManagementUserColumn, String>, TreeTableCell<ManagementUserColumn, String>>() {
             @Override
-            public TreeTableCell<ManagementUserColumn, Boolean> call(TreeTableColumn<ManagementUserColumn, Boolean> managementUserColumnBooleanTreeTableColumn) {
-                final TreeTableCell<ManagementUserColumn,Boolean> cell = new TreeTableCell<ManagementUserColumn,Boolean>(){
+            public TreeTableCell<ManagementUserColumn, String> call(TreeTableColumn<ManagementUserColumn, String> managementUserColumnBooleanTreeTableColumn) {
+                final TreeTableCell<ManagementUserColumn,String> cell = new TreeTableCell<ManagementUserColumn,String>(){
                   final JFXButton btn = new JFXButton("Edit");
                     @Override
-                    protected void updateItem(Boolean aBoolean, boolean b) {
-                        super.updateItem(aBoolean, b);
+                    protected void updateItem(String aString, boolean b) {
+                        super.updateItem(aString, b);
                         if (b){
                             setGraphic(null);
                         }else {
@@ -79,8 +79,15 @@ public class ManagementUserController implements Initializable {
                             btn.setOnAction(event -> {
                                 Node node = (Node) event.getSource();
                                 AnchorPane anchorPane = (AnchorPane) node.getParent().getParent().getParent().getParent().getParent().getParent().getParent();
+                                JFXTreeTableRow<ManagementUserColumn> row = (JFXTreeTableRow<ManagementUserColumn>) node.getParent().getParent();
+                                String id = row.getTreeItem().getValue().id.getValue();
+                                State state = new State();
+                                state.putItem("ID_SELECTED",id);
+                                Context context = new Context();
+                                context.putState("ID",state);
+                                Globe.getGlobe().putContext("CONTEXT_ID",context);
                                 try {
-                                    anchorPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("../views/arrangement_file_view.fxml")));
+                                    anchorPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("../views/edit_user_view.fxml")));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -96,7 +103,7 @@ public class ManagementUserController implements Initializable {
         more.setCellFactory(settingColumn);
         ObservableList<ManagementUserController.ManagementUserColumn> managementUserColumns = FXCollections.observableArrayList();
         for (UserModel model : UserModel.getUserModels()){
-            managementUserColumns.add(new ManagementUserColumn(model.getId(),model.getTelegramId(),model.getName(),model.getUrlKtpPhoto(),model.getUrlSelfPhoto(),model.isVerification()));
+            managementUserColumns.add(new ManagementUserColumn(model.getId(),model.getTelegramId(),model.getName(),model.getUrlKtpPhoto(),model.getUrlSelfPhoto(),model.getStatus()));
         }
 
         TreeItem<ManagementUserColumn> item = new RecursiveTreeItem<>(managementUserColumns,RecursiveTreeObject::getChildren);
@@ -111,15 +118,15 @@ public class ManagementUserController implements Initializable {
         StringProperty name;
         StringProperty urlKtpPhoto;
         StringProperty urlSelfPhoto;
-        BooleanProperty verified;
+        StringProperty status;
 
-        public ManagementUserColumn(String id, String telegramId, String name, String urlKtpPhoto, String urlSelfPhoto, Boolean verified) {
+        public ManagementUserColumn(String id, String telegramId, String name, String urlKtpPhoto, String urlSelfPhoto, String status) {
             this.id = new SimpleStringProperty(id);
             this.telegramId = new SimpleStringProperty(telegramId);
             this.name = new SimpleStringProperty(name);
             this.urlKtpPhoto = new SimpleStringProperty(urlKtpPhoto);
             this.urlSelfPhoto = new SimpleStringProperty(urlSelfPhoto);
-            this.verified = new SimpleBooleanProperty(verified);
+            this.status = new SimpleStringProperty(status);
         }
     }
 }

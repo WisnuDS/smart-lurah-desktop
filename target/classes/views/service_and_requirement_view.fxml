@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="612.0" maxWidth="1078.0" prefHeight="612.0" prefWidth="1078.0" styleClass="text-roboto-bold" stylesheets="@resource/css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ServiceAndRequirementController">
+   <children>
+      <StackPane fx:id="stackPane" prefHeight="612.0" prefWidth="1078.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane maxHeight="612.0" maxWidth="1078.0" prefHeight="612.0" prefWidth="1078.0" styleClass="text-roboto-bold" stylesheets="@resource/css/style.css">
+               <children>
+                  <JFXListView fx:id="listServices" layoutX="163.0" layoutY="116.0" prefHeight="437.0" prefWidth="315.0" />
+                  <JFXListView fx:id="listRequirements" layoutX="609.0" layoutY="115.0" prefHeight="437.0" prefWidth="315.0" />
+                  <Text fill="#4e73df" layoutX="164.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pelayanan">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#4e73df" layoutX="609.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Persyaratan">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <JFXButton fx:id="btnAddService" layoutX="405.0" layoutY="80.0" onAction="#addServices" style="-fx-background-color: #4e73df;" text="Tambah" textFill="WHITE" />
+                  <JFXButton fx:id="btnEditService" layoutX="340.0" layoutY="80.0" onAction="#editServices" style="-fx-background-color: #e74a3b;" text="Hapus" textFill="WHITE" />
+                  <JFXButton fx:id="btnAddRequirement" layoutX="851.0" layoutY="80.0" onAction="#addRequirements" style="-fx-background-color: #4e73df;" text="Tambah" textFill="WHITE" />
+                  <JFXButton fx:id="btnEditRequirement" layoutX="785.0" layoutY="80.0" onAction="#editRequirements" style="-fx-background-color: #e74a3b;" text="Hapus" textFill="WHITE" />
+                  <Text fill="#4e73df" layoutX="512.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt;&gt;&gt;&gt;">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

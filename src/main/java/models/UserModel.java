@@ -11,7 +11,7 @@ public class UserModel extends Model {
     private String name;
     private String urlKtpPhoto;
     private String urlSelfPhoto;
-    private boolean verification;
+    private String status;
     private static final UserModel model = new UserModel();
 
     public String getId() {
@@ -54,22 +54,25 @@ public class UserModel extends Model {
         this.urlSelfPhoto = urlSelfPhoto;
     }
 
-    public boolean isVerification() {
-        return verification;
+    public String getStatus() {
+        return status;
     }
 
-    public void setVerification(String verification) {
-        if (verification.equals("0")){
-            this.verification = false;
-        }else {
-            this.verification = true;
-        }
-
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public static List<UserModel> getUserModels(){
         List<UserModel> models = new ArrayList<>();
-        for (Object o : model.getAllData("WHERE verification = 1")){
+        for (Object o : model.getAllData("WHERE status = 'verified'")){
+            models.add((UserModel) o);
+        }
+        return models;
+    }
+
+    public static List<UserModel> getUserModels(String id){
+        List<UserModel> models = new ArrayList<>();
+        for (Object o : model.getAllData("WHERE status = 'verified' && id = "+id)){
             models.add((UserModel) o);
         }
         return models;
@@ -77,7 +80,23 @@ public class UserModel extends Model {
 
     public static List<UserModel> getUnregisteredUserModels(){
         List<UserModel> models = new ArrayList<>();
-        for (Object o : model.getAllData("WHERE verification = 0")){
+        for (Object o : model.getAllData("WHERE status = 'unverified'")){
+            models.add((UserModel) o);
+        }
+        return models;
+    }
+
+    public static List<UserModel> getRejectedUserModels(){
+        List<UserModel> models = new ArrayList<>();
+        for (Object o : model.getAllData("WHERE status = 'rejected'")){
+            models.add((UserModel) o);
+        }
+        return models;
+    }
+
+    public static List<UserModel> getUnregisteredUserModels(String id){
+        List<UserModel> models = new ArrayList<>();
+        for (Object o : model.getAllData("WHERE status = 'unverified' && id = "+id)){
             models.add((UserModel) o);
         }
         return models;
@@ -90,6 +109,6 @@ public class UserModel extends Model {
 
     @Override
     public String[] columns() {
-        return new String[]{"id","telegram_id","name","url_ktp_photo","url_self_photo","verification"};
+        return new String[]{"id","telegram_id","name","url_ktp_photo","url_self_photo","status"};
     }
 }

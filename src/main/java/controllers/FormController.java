@@ -1,6 +1,8 @@
 package controllers;
 
 import com.jfoenix.controls.*;
+import helper.Globe;
+import helper.State;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,13 +10,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
+import models.ArrangementModel;
+import models.FileModel;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -28,14 +34,19 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class FormController implements Initializable {
+    private String id;
+    ArrayList<FileModel> files = new ArrayList<>();
 
     @FXML
     private StackPane stackPane;
@@ -86,11 +97,11 @@ public class FormController implements Initializable {
     private ImageView imgPreview;
 
     @FXML
-    private JFXListView<String> listFile;
+    private JFXListView<FileModel> listFile;
 
     @FXML
     void goBack(ActionEvent event) {
-        changeView(event);
+        changeView(event,"arrangement_file_view");
     }
 
     @FXML
@@ -109,6 +120,10 @@ public class FormController implements Initializable {
         buttonNo.setOnAction(event1 -> dialog.close());
         buttonYes.setOnAction(event1 -> {
             writeDocument();
+            HashMap<String,String> hashMap = new HashMap<>();
+            hashMap.put("status","'finished'");
+            ArrangementModel model = new ArrangementModel();
+            model.update(hashMap,"id="+id);
             dialog.close();
             openDocument(FileSystems.getDefault().getPath("").toAbsolutePath() +"/"+txtNama.getText()+"_"+jenisSurat.getValue()+".pdf");
             Node node = (Node) event1.getSource();
@@ -124,12 +139,12 @@ public class FormController implements Initializable {
         dialog.show();
     }
 
-    private void changeView(ActionEvent event){
+    private void changeView(ActionEvent event, String page){
         Node node = (Node) event.getSource();
         System.out.println(node.getParent().getParent().getParent().getParent().getChildrenUnmodifiable());
         AnchorPane pane = (AnchorPane) node.getParent().getParent().getParent().getParent().getParent();
         try {
-            pane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("../views/arrangement_view.fxml")));
+            pane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("../views/"+page+".fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -240,5 +255,40 @@ public class FormController implements Initializable {
         agama.getItems().addAll("Islam", "Kristen", "Katolik", "Hindu", "Budha", "Konghucu", "Aliran Kepercayaan");
         golDarah.getItems().addAll("A", "B", "AB", "O");
         jenisSurat.getItems().addAll("Surat Keterangan Pembuatan KTP bagi Pemula", "Surat Keterangan Kematian", "Surat Keterngan Pindah", "Surat Keterangan Datang", "Surat Perubahan KK", "Surat Pengantar SKCK", "Surat Pengantar Nikah", "Surat Keterangan Lahir");
+        State state = Globe.getGlobe().getContext("DOING").getState("ON_PROCESS");
+        id = state.getItem("ID_SELECTED").toString();
+        System.out.println("Id Selected : "+id);
+        Callback<ListView<FileModel>, ListCell<FileModel>> settingList = new Callback<ListView<FileModel>, ListCell<FileModel>>() {
+            @Override
+            public ListCell<FileModel> call(ListView<FileModel> fileModelListView) {
+                final ListCell<FileModel> cell = new ListCell<FileModel>(){
+                    @Override
+                    protected void updateItem(FileModel item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty){
+                            setGraphic(null);
+                        }else {
+                            setText(item.getNameRequirement());
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        listFile.setCellFactory(settingList);
+        files.addAll(FileModel.getAllFile(id));
+        listFile.getItems().setAll(files);
+        listFile.getSelectionModel().selectedItemProperty().addListener((observableValue, s, t1) -> {
+            FileModel file = listFile.getSelectionModel().getSelectedItem();
+            String path = file.getUrlFile();
+            File temp = new File(path);
+            javafx.scene.image.Image image = null;
+            try {
+                image = new Image(temp.toURI().toURL().toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            imgPreview.setImage(image);
+        });
     }
 }

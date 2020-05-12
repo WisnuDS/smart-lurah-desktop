@@ -18,9 +18,23 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
+import javafx.scene.text.Text;
 import models.AdminModel;
+import models.ArrangementModel;
 
 public class DashboardController {
+
+    @FXML
+    private Text txtProcess;
+
+    @FXML
+    private Text txtFinished;
+
+    @FXML
+    private Text txtNotVerified;
+
+    @FXML
+    private Text txtRejected;
 
     @FXML
     private ResourceBundle resources;
@@ -41,6 +55,10 @@ public class DashboardController {
 
     @FXML
     void initialize() {
+        txtFinished.setText(String.valueOf(ArrangementModel.getArrangements("api_arrangement.status='finished'").size()));
+        txtNotVerified.setText(String.valueOf(ArrangementModel.getArrangements("api_arrangement.status='not verified'").size()));
+        txtProcess.setText(String.valueOf(ArrangementModel.getArrangements("api_arrangement.status='verified'").size()));
+        txtRejected.setText(String.valueOf(ArrangementModel.getArrangements("api_arrangement.status='rejected'").size()));
         JFXTreeTableColumn<UserColumn,String> username = new JFXTreeTableColumn<>("Username");
         username.setPrefWidth(252);
         username.setCellValueFactory(userColumnStringCellDataFeatures -> userColumnStringCellDataFeatures.getValue().getValue().username);

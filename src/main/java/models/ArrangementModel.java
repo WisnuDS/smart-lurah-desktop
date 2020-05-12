@@ -12,9 +12,9 @@ public class ArrangementModel extends Model {
     private String typeService;
     private String userId;
     private String name;
-    private boolean verification;
-    private boolean finished;
+    private String status;
     private static final ArrangementModel model = new ArrangementModel();
+
 
     public String getId() {
         return id;
@@ -48,22 +48,6 @@ public class ArrangementModel extends Model {
         this.userId = userId;
     }
 
-    public boolean isVerification() {
-        return verification;
-    }
-
-    public void setVerification(String verification) {
-        this.verification = !verification.equals("0");
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(String finished) {
-        this.finished = !finished.equals("0");
-    }
-
     public String getTypeService() {
         return typeService;
     }
@@ -80,9 +64,26 @@ public class ArrangementModel extends Model {
         this.name = name;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public static List<ArrangementModel> getArrangements(){
         List<ArrangementModel> models = new ArrayList<>();
         String clause = "JOIN api_services on api_arrangement.service_id = api_services.id JOIN api_user on api_arrangement.user_id = api_user.id";
+        for (Object o : model.getAllData(clause)){
+            models.add((ArrangementModel) o);
+        }
+        return models;
+    }
+
+    public static List<ArrangementModel> getArrangements(String condition){
+        List<ArrangementModel> models = new ArrayList<>();
+        String clause = "JOIN api_services on api_arrangement.service_id = api_services.id JOIN api_user on api_arrangement.user_id = api_user.id WHERE "+condition;
         for (Object o : model.getAllData(clause)){
             models.add((ArrangementModel) o);
         }
@@ -96,6 +97,6 @@ public class ArrangementModel extends Model {
 
     @Override
     public String[] columns() {
-        return new String[]{"id","date","verification","service_id","user_id","finished","name","type_service"};
+        return new String[]{"id","date","service_id","user_id","status","name","type_service"};
     }
 }

@@ -17,12 +17,12 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-radius: 10px;">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="108.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="boxDashboar" width="230.0" />
-                  <Text fill="#4e73df" layoutX="18.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Banyak Permintaan">
+                  <Text fill="#4e73df" layoutX="18.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Sedang Diproses">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
                   </Text>
-                  <Text fill="#4e73df" layoutX="20.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="50">
+                  <Text fx:id="txtProcess" fill="#4e73df" layoutX="20.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="50">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font name="Arial" size="13.0" />
                      </font>
                   </Text>
-                  <Text fill="#1cc88a" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="20">
+                  <Text fx:id="txtFinished" fill="#1cc88a" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="20">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>
@@ -53,12 +53,12 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="108.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="boxDashboar" width="230.0" />
-                  <Text fill="#f6c23e" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Yang Sedang Diproses">
+                  <Text fill="#f6c23e" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Yang Belum Diverifikasi">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
                   </Text>
-                  <Text fill="#f6c23e" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="25">
+                  <Text fx:id="txtNotVerified" fill="#f6c23e" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="25">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>
@@ -71,12 +71,12 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="108.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="boxDashboar" width="230.0" />
-                  <Text fill="#e74a3b" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Yang belum diverifikasi">
+                  <Text fill="#e74a3b" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="Yang Ditolak">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
                   </Text>
-                  <Text fill="#e74a3b" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="5">
+                  <Text fx:id="txtRejected" fill="#e74a3b" layoutX="16.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-roboto" text="5">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>

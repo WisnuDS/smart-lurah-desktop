@@ -27,7 +27,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
+import models.ArrangementModel;
 import models.UserModel;
 
 import java.io.IOException;
@@ -38,10 +40,14 @@ public class RegistrationController implements Initializable {
     public static final String PAGE = "REGISTRATION_CONTROLLER";
 
     @FXML
+    private JFXComboBox<String> cbxStatus;
+
+    @FXML
     private JFXTreeTableView<RegistrationColumn> tableRegistration;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        cbxStatus.getItems().setAll("Ditolak","Belum Diverifikasi");
         JFXTreeTableColumn<RegistrationColumn,String> id = new JFXTreeTableColumn<>("Id");
         id.setPrefWidth(50);
         id.setCellValueFactory(userColumnStringCellDataFeatures -> userColumnStringCellDataFeatures.getValue().getValue().id);
@@ -57,22 +63,22 @@ public class RegistrationController implements Initializable {
         JFXTreeTableColumn<RegistrationColumn,String> urlSelf = new JFXTreeTableColumn<>("Url Foto Diri");
         urlSelf.setPrefWidth(166);
         urlSelf.setCellValueFactory(userColumnStringCellDataFeatures -> userColumnStringCellDataFeatures.getValue().getValue().urlSelfPhoto);
-        JFXTreeTableColumn<RegistrationColumn,Boolean> verified = new JFXTreeTableColumn<>("Terverifikasi");
+        JFXTreeTableColumn<RegistrationColumn,String> verified = new JFXTreeTableColumn<>("Terverifikasi");
         verified.setPrefWidth(166);
-        verified.setCellValueFactory(registrationColumnBooleanCellDataFeatures -> registrationColumnBooleanCellDataFeatures.getValue().getValue().verified);
-        JFXTreeTableColumn<RegistrationColumn,Boolean> more = new JFXTreeTableColumn<>("Detail");
+        verified.setCellValueFactory(registrationColumnStringCellDataFeatures -> registrationColumnStringCellDataFeatures.getValue().getValue().status);
+        JFXTreeTableColumn<RegistrationColumn,String> more = new JFXTreeTableColumn<>("Detail");
         more.setPrefWidth(116);
-        more.setCellValueFactory(registrationColumnBooleanCellDataFeatures -> registrationColumnBooleanCellDataFeatures.getValue().getValue().verified);
-        Callback<TreeTableColumn<RegistrationColumn,Boolean>, TreeTableCell<RegistrationColumn, Boolean>> settingColumn = new Callback<TreeTableColumn<RegistrationColumn, Boolean>, TreeTableCell<RegistrationColumn, Boolean>>() {
+        more.setCellValueFactory(registrationColumnStringCellDataFeatures -> registrationColumnStringCellDataFeatures.getValue().getValue().status);
+        Callback<TreeTableColumn<RegistrationColumn,String>, TreeTableCell<RegistrationColumn, String>> settingColumn = new Callback<TreeTableColumn<RegistrationColumn, String>, TreeTableCell<RegistrationColumn, String>>() {
 
             @Override
-            public TreeTableCell<RegistrationColumn, Boolean> call(TreeTableColumn<RegistrationColumn, Boolean> arrangementColumnBooleanTreeTableColumn) {
-                final TreeTableCell<RegistrationColumn,Boolean> cell = new TreeTableCell<RegistrationColumn,Boolean>(){
+            public TreeTableCell<RegistrationColumn, String> call(TreeTableColumn<RegistrationColumn, String> arrangementColumnBooleanTreeTableColumn) {
+                final TreeTableCell<RegistrationColumn,String> cell = new TreeTableCell<RegistrationColumn,String>(){
                     final JFXButton btn = new JFXButton("More");
 
                     @Override
-                    protected void updateItem(Boolean aBoolean, boolean b) {
-                        super.updateItem(aBoolean, b);
+                    protected void updateItem(String aString, boolean b) {
+                        super.updateItem(aString, b);
                         if (b) {
                             setGraphic(null);
                         } else {
@@ -83,7 +89,7 @@ public class RegistrationController implements Initializable {
                             btn.setOnAction(event -> {
                                 Node node = (Node) event.getSource();
                                 JFXTreeTableRow<RegistrationColumn> row = (JFXTreeTableRow<RegistrationColumn>) node.getParent().getParent();
-                                String id = String.valueOf(row.getTreeItem().getValue().id);
+                                String id = String.valueOf(row.getTreeItem().getValue().id.getValue());
                                 State state = new State();
                                 state.putItem("ID_SELECTED",id);
                                 state.putItem("FROM",RegistrationController.PAGE);
@@ -92,6 +98,9 @@ public class RegistrationController implements Initializable {
                                 Globe.getGlobe().putContext("VERIFICATION",context);
                                 changeScene(event);
                             });
+                            if (aString.equals("rejected")){
+                                btn.setDisable(true);
+                            }
                             setGraphic(btn);
                         }
                         setText(null);
@@ -101,16 +110,64 @@ public class RegistrationController implements Initializable {
             }
         };
 
+        Callback<TreeTableColumn<RegistrationColumn,String>,TreeTableCell<RegistrationColumn,String>> settingStatusColumn = new Callback<TreeTableColumn<RegistrationColumn, String>, TreeTableCell<RegistrationColumn, String>>() {
+            @Override
+            public TreeTableCell<RegistrationColumn, String> call(TreeTableColumn<RegistrationColumn, String> registrationColumnStringTreeTableColumn) {
+                final TreeTableCell<RegistrationColumn,String> cell = new TreeTableCell<RegistrationColumn,String>(){
+                    final Text text = new Text();
+                    @Override
+                    protected void updateItem(String s, boolean b) {
+                        super.updateItem(s, b);
+                        if (b){
+                            setGraphic(null);
+                        }else {
+                            switch (s){
+                                case "unverified":
+                                    text.setText("Belum Diverifikasi");
+                                    text.setFill(Paint.valueOf("#f6c23e"));
+                                    break;
+                                case "rejected":
+                                    text.setText("Ditolak");
+                                    text.setFill(Paint.valueOf("#e74a3b"));
+                                    break;
+
+                            }
+                            setGraphic(text);
+                        }
+                        setText(null);
+                    }
+                };
+                return cell;
+            }
+        };
+
         more.setCellFactory(settingColumn);
+        verified.setCellFactory(settingStatusColumn);
         ObservableList<RegistrationColumn> registrationColumns = FXCollections.observableArrayList();
         for (UserModel model : UserModel.getUnregisteredUserModels()){
-            registrationColumns.add(new RegistrationColumn(model.getId(),model.getTelegramId(),model.getName(),model.getUrlKtpPhoto(),model.getUrlSelfPhoto(),model.isVerification()));
+            registrationColumns.add(new RegistrationColumn(model.getId(),model.getTelegramId(),model.getName(),model.getUrlKtpPhoto(),model.getUrlSelfPhoto(),model.getStatus()));
         }
 
         TreeItem<RegistrationColumn> item = new RecursiveTreeItem<>(registrationColumns, RecursiveTreeObject::getChildren);
         tableRegistration.getColumns().setAll(id,telegramId,name,urlKtp,urlSelf,verified,more);
         tableRegistration.setRoot(item);
         tableRegistration.setShowRoot(false);
+
+        cbxStatus.valueProperty().addListener((observableValue, s, t1) -> {
+            if (t1.equals("Ditolak")){
+                registrationColumns.removeAll(registrationColumns);
+                for (UserModel model : UserModel.getRejectedUserModels()) {
+                    registrationColumns.add(new RegistrationColumn(model.getId(),model.getTelegramId(),model.getName(),model.getUrlKtpPhoto(),model.getUrlSelfPhoto(),model.getStatus()));
+                }
+                tableRegistration.refresh();
+            } else {
+                registrationColumns.removeAll(registrationColumns);
+                for (UserModel model : UserModel.getUnregisteredUserModels()) {
+                    registrationColumns.add(new RegistrationColumn(model.getId(),model.getTelegramId(),model.getName(),model.getUrlKtpPhoto(),model.getUrlSelfPhoto(),model.getStatus()));
+                }
+                tableRegistration.refresh();
+            }
+        });
     }
 
     private void changeScene(ActionEvent event) {
@@ -131,15 +188,15 @@ public class RegistrationController implements Initializable {
         StringProperty name;
         StringProperty urlKtpPhoto;
         StringProperty urlSelfPhoto;
-        BooleanProperty verified;
+        StringProperty status;
 
-        public RegistrationColumn(String id, String telegramId, String name, String urlKtpPhoto, String urlSelfPhoto, Boolean verified) {
+        public RegistrationColumn(String id, String telegramId, String name, String urlKtpPhoto, String urlSelfPhoto, String status) {
             this.id = new SimpleStringProperty(id);
             this.telegramId = new SimpleStringProperty(telegramId);
             this.name = new SimpleStringProperty(name);
             this.urlKtpPhoto = new SimpleStringProperty(urlKtpPhoto);
             this.urlSelfPhoto = new SimpleStringProperty(urlSelfPhoto);
-            this.verified = new SimpleBooleanProperty(verified);
+            this.status = new SimpleStringProperty(status);
         }
     }
 }

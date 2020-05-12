@@ -1,8 +1,12 @@
 package models;
 
+import helper.DBConnection;
 import helper.Model;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ServiceRequirementModel extends Model {
@@ -61,6 +65,20 @@ public class ServiceRequirementModel extends Model {
             models.add((ServiceRequirementModel) o);
         }
         return models;
+    }
+
+    public boolean delete(String clause){
+        StringBuilder sql = new StringBuilder("DELETE FROM "+table());
+        sql.append(" WHERE ").append(clause);
+        System.out.println(sql);
+        try {
+            DBConnection connection = new DBConnection();
+            Statement statement = connection.connection().createStatement();
+            return statement.executeUpdate(String.valueOf(sql)) > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

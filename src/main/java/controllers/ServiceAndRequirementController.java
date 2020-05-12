@@ -95,12 +95,12 @@ public class ServiceAndRequirementController implements Initializable {
 
     @FXML
     void editRequirements(ActionEvent event) {
-
+        createDialogDelete("Persyaratan");
     }
 
     @FXML
     void editServices(ActionEvent event) {
-
+        createDialogDelete("Pelayanan");
     }
 
     @Override
@@ -169,7 +169,8 @@ public class ServiceAndRequirementController implements Initializable {
         btnYes.setOnAction(event -> {
             if (type.equals("Pelayanan")){
                 if (textField.isDisable()){
-                    JFXComboBox<ServiceModel> box = (JFXComboBox<ServiceModel>) content.getBody().get(0);
+                    VBox vBox = (VBox) content.getBody().get(0);
+                    JFXComboBox<ServiceModel> box = (JFXComboBox<ServiceModel>) vBox.getChildren().get(0);
                     ServiceModel serviceModel = box.getValue();
                     HashMap<String,String> hashMap = new HashMap<>();
                     hashMap.put("status","'active'");
@@ -181,9 +182,7 @@ public class ServiceAndRequirementController implements Initializable {
                     hashMap.put("status","'active'");
                     serviceModel.insert(hashMap);
                 }
-                listServices.getItems().removeAll(listServices.getItems());
-                listServices.getItems().addAll(ServiceModel.getServices("active"));
-                listServices.refresh();
+                refreshServiceList();
             }else {
                 if (textField.isDisable()){
                     VBox boxx = (VBox) content.getBody().get(0);
@@ -196,7 +195,7 @@ public class ServiceAndRequirementController implements Initializable {
                 }else {
                     RequirementModel requirementModel = new RequirementModel();
                     HashMap<String,String> hash = new HashMap<>();
-                    hash.put("name_requirement",textField.getText());
+                    hash.put("name_requirement","'"+textField.getText()+"'");
                     requirementModel.insert(hash);
                     String id = RequirementModel.getAllRequirement("ORDER BY id DESC LIMIT 1").get(0).getId();
                     ServiceRequirementModel serviceRequirementModel = new ServiceRequirementModel();
@@ -214,12 +213,55 @@ public class ServiceAndRequirementController implements Initializable {
     private void insertServiceRequirement(ServiceRequirementModel serviceRequirementModel, HashMap<String, String> hashMap) {
         hashMap.put("service_id",listServices.getSelectionModel().getSelectedItem().getId());
         serviceRequirementModel.insert(hashMap);
+        refreshRequirementList();
+    }
+
+    private void createDialogDelete(String type){
+        JFXDialogLayout content = new JFXDialogLayout();
+        JFXDialog dialog = new JFXDialog(stackPane,content, JFXDialog.DialogTransition.CENTER);
+        content.setHeading(new Text("Konfirmasi Hapus"));
+        content.setBody(new Text("Apakah Anda yakin menghapus?"));
+        JFXButton btnYes = new JFXButton("Hapus");
+        JFXButton btnNo = new JFXButton("Batal");
+        btnYes.setTextFill(Paint.valueOf("#ffffff"));
+        btnYes.setButtonType(JFXButton.ButtonType.FLAT);
+        btnYes.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e74a3b"), CornerRadii.EMPTY,null)));
+        btnYes.setCursor(Cursor.HAND);
+        btnNo.setCursor(Cursor.HAND);
+        btnNo.setOnAction(event -> dialog.close());
+        btnYes.setOnAction(event -> {
+            if (type.equals("Pelayanan")){
+                ServiceModel serviceModel = new ServiceModel();
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put("status","'inactive'");
+                serviceModel.update(hashMap,"id = "+listServices.getSelectionModel().getSelectedItem().getId());
+                refreshServiceList();
+            }else {
+                ServiceRequirementModel model = new ServiceRequirementModel();
+                String serviceId = listServices.getSelectionModel().getSelectedItem().getId();
+                String requirementId = listRequirements.getSelectionModel().getSelectedItem().getId();
+                model.delete("service_id = "+serviceId+" && requirement_id = "+requirementId);
+                refreshRequirementList();
+            }
+            dialog.close();
+        });
+        content.setActions(btnNo,btnYes);
+        dialog.show();
+    }
+
+    private void refreshRequirementList() {
         List<ServiceRequirementModel> details = ServiceRequirementModel.getDetailRequirement(listServices.getSelectionModel().getSelectedItem().getId());
         listRequirements.getItems().removeAll(listRequirements.getItems());
         for (ServiceRequirementModel detail : details){
             listRequirements.getItems().add(new RequirementModel(detail.getRequirementId(),detail.getNameRequirement()));
         }
         listRequirements.refresh();
+    }
+
+    private void refreshServiceList(){
+        listServices.getItems().removeAll(listServices.getItems());
+        listServices.getItems().addAll(ServiceModel.getServices("active"));
+        listServices.refresh();
     }
 }
 

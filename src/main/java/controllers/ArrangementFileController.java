@@ -1,10 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.*;
-import helper.Context;
-import helper.Globe;
-import helper.Helper;
-import helper.State;
+import helper.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -162,6 +159,11 @@ public class ArrangementFileController implements Initializable {
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("status", "'verified'");
                 model.update(hashMap,"id = "+id);
+                ArrangementModel model1 = (ArrangementModel) model.findData(id);
+                UserModel model2 = new UserModel();
+                model2 = (UserModel) model2.findData(model1.getUserId());
+                String message = "*[[Pemberitahuan]]*\n\n"+"Berkas persyaratan anda telah kami verifikasi. Selanjutnya "+model1.getTypeService()+" tengah dikejakan oleh petugas. Akan kami beritahukan apabila telah selesai dikerjakan.";
+                BotHendler.sendMessage(model2.getTelegramId(),message);
                 dialog.close();
             }else {
                 btnAccept.setDisable(true);
@@ -171,6 +173,8 @@ public class ArrangementFileController implements Initializable {
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("status", "'verified'");
                 model.update(hashMap,"id = "+id);
+                UserModel selected = (UserModel) model.findData(id);
+                BotHendler.sendMessage(selected.getTelegramId(),"*[[Pemberitahuan]]*\n\n"+"Selamat, registrasi anda telah lolos verifikasi. Sekarang anda dapat menggunakan semua fitur pada bot ini.");
                 dialog.close();
             }
         });
@@ -196,12 +200,16 @@ public class ArrangementFileController implements Initializable {
         buttonYa.setBackground(new Background(new BackgroundFill(Paint.valueOf("#4e73df"), CornerRadii.EMPTY,null)));
         buttonYa.setCursor(Cursor.HAND);
         buttonYa.setOnAction(event1 -> {
+            String message;
+            UserModel userModel = new UserModel();
             if (from.equals(ArrangementController.PAGE)){
-
                 ArrangementModel model = new ArrangementModel();
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("status","'rejected'");
                 model.update(hashMap,"id="+id);
+                model = (ArrangementModel) model.findData(id);
+                userModel = (UserModel) userModel.findData(model.getUserId());
+                message = "*[[Pemberitahuan]]*\n\n"+"Pengajuan "+model.getTypeService()+" ditolak oleh petugas dengan alasan sebagai berikut:\n"+area.getText()+"\nSilahkan mengajukan pengajuan ulang dengan memperbaiki berkas yang tidak sesuai";
                 dialog.close();
             }else {
                 btnAccept.setDisable(true);
@@ -210,8 +218,11 @@ public class ArrangementFileController implements Initializable {
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("status","'rejected'");
                 model.update(hashMap,"id="+id);
+                userModel = (UserModel) model.findData(id);
+                message = "*[[Pemberitahuan]]*\n\n"+"Pengajuan registrasi anda ditolak oleh petugas dengan alasan sebagai berikut:\n"+area.getText()+"\nSilahkan registrasi ulang :)";
                 dialog.close();
             }
+            BotHendler.sendMessage(userModel.getTelegramId(),message);
         });
         buttonTidak.setCursor(Cursor.HAND);
         buttonTidak.setOnAction(event1 -> dialog.close());

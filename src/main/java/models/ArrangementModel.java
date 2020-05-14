@@ -91,6 +91,15 @@ public class ArrangementModel extends Model {
     }
 
     @Override
+    public Object findData(String id) {
+        try {
+            return this.getAllData("JOIN api_services on api_arrangement.service_id = api_services.id JOIN api_user on api_arrangement.user_id = api_user.id WHERE api_arrangement.id = " + id).get(0);
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
     public String table() {
         return "api_arrangement";
     }

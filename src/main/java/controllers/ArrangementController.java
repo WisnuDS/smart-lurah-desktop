@@ -33,9 +33,12 @@ import models.ArrangementModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ArrangementController implements Initializable {
     public static final String PAGE = "ARRANGEMENT_CONTROLLER";
+//    private Timer timer = new Timer();
 
     @FXML
     private JFXTreeTableView<ArrangementController.ArrangementColumn> tableArrangement;
@@ -94,6 +97,7 @@ public class ArrangementController implements Initializable {
                                 Context context = new Context();
                                 context.putState("VIEW_DETAIL_USER_REGISTRATION",state);
                                 Globe.getGlobe().putContext("VERIFICATION",context);
+//                                timer.cancel();
                                 try {
                                     anchorPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("../views/arrangement_file_view.fxml")));
                                 } catch (IOException e) {
@@ -161,44 +165,55 @@ public class ArrangementController implements Initializable {
         tableArrangement.setRoot(item);
         tableArrangement.setShowRoot(false);
         cbboxStatus.valueProperty().addListener((observableValue, s, t1) -> {
-            switch (t1) {
-                case "Semua":
-                    arrangementColumns.removeAll(arrangementColumns);
-                    for (ArrangementModel model : ArrangementModel.getArrangements()) {
-                        arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
-                    }
-                    tableArrangement.refresh();
-                    break;
-                case "Dalam Proses":
-                    arrangementColumns.removeAll(arrangementColumns);
-                    for (ArrangementModel model : ArrangementModel.getArrangements("api_arrangement.status='verified'")) {
-                        arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
-                    }
-                    tableArrangement.refresh();
-                    break;
-                case "Ditolak":
-                    arrangementColumns.removeAll(arrangementColumns);
-                    for (ArrangementModel model : ArrangementModel.getArrangements("api_arrangement.status='rejected'")) {
-                        arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
-                    }
-                    tableArrangement.refresh();
-                    break;
-                case "Selesai":
-                    arrangementColumns.removeAll(arrangementColumns);
-                    for (ArrangementModel model : ArrangementModel.getArrangements("api_arrangement.status='finished'")) {
-                        arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
-                    }
-                    tableArrangement.refresh();
-                    break;
-                default:
-                    arrangementColumns.removeAll(arrangementColumns);
-                    for (ArrangementModel model : ArrangementModel.getArrangements("api_arrangement.status='not verified'")) {
-                        arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
-                    }
-                    tableArrangement.refresh();
-                    break;
-            }
+            refreshTable(t1,arrangementColumns);
         });
+        cbboxStatus.setValue("Semua");
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                refreshTable(cbboxStatus.getValue(),arrangementColumns);
+//            }
+//        },0,5000);
+    }
+
+    private void refreshTable(String t1, ObservableList<ArrangementColumn> arrangementColumns){
+        switch (t1) {
+            case "Semua":
+                arrangementColumns.removeAll(arrangementColumns);
+                for (ArrangementModel model : ArrangementModel.getArrangements()) {
+                    arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
+                }
+                tableArrangement.refresh();
+                break;
+            case "Dalam Proses":
+                arrangementColumns.removeAll(arrangementColumns);
+                for (ArrangementModel model : ArrangementModel.getArrangements("api_arrangement.status='verified'")) {
+                    arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
+                }
+                tableArrangement.refresh();
+                break;
+            case "Ditolak":
+                arrangementColumns.removeAll(arrangementColumns);
+                for (ArrangementModel model : ArrangementModel.getArrangements("api_arrangement.status='rejected'")) {
+                    arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
+                }
+                tableArrangement.refresh();
+                break;
+            case "Selesai":
+                arrangementColumns.removeAll(arrangementColumns);
+                for (ArrangementModel model : ArrangementModel.getArrangements("api_arrangement.status='finished'")) {
+                    arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
+                }
+                tableArrangement.refresh();
+                break;
+            default:
+                arrangementColumns.removeAll(arrangementColumns);
+                for (ArrangementModel model : ArrangementModel.getArrangements("api_arrangement.status='not verified'")) {
+                    arrangementColumns.add(new ArrangementColumn(model.getId(), model.getDate(), model.getName(), model.getTypeService(), model.getStatus()));
+                }
+                tableArrangement.refresh();
+                break;
+        }
     }
 
     static class ArrangementColumn extends RecursiveTreeObject<ArrangementColumn> {

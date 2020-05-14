@@ -96,7 +96,12 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </JFXButton>
-                        <JFXButton fx:id="btnSubmit" layoutX="275.0" layoutY="573.0" onAction="#submit" style="-fx-background-color: #4e73df;" stylesheets="@resource/css/style.css" text="Submit" textFill="WHITE">
+                        <JFXButton fx:id="btnSubmit" layoutX="193.0" layoutY="576.0" onAction="#submit" style="-fx-background-color: #4e73df;" stylesheets="@resource/css/style.css" text="Submit" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton fx:id="btnFinish" layoutX="268.0" layoutY="576.0" onAction="#finish" style="-fx-background-color: #1cc88a;" stylesheets="@resource/css/style.css" text="Selesai" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

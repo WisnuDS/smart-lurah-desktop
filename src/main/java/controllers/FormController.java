@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.*;
+import helper.BotHendler;
 import helper.Globe;
 import helper.State;
 import javafx.event.ActionEvent;
@@ -21,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import models.ArrangementModel;
 import models.FileModel;
+import models.UserModel;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -94,10 +96,21 @@ public class FormController implements Initializable {
     private JFXButton btnSubmit;
 
     @FXML
+    private JFXButton btnFinish;
+
+    @FXML
     private ImageView imgPreview;
 
     @FXML
     private JFXListView<FileModel> listFile;
+
+    @FXML
+    void finish(ActionEvent event) {
+        ArrangementModel arrangementModel = ArrangementModel.getArrangements("api_arrangement.id = "+id).get(0);
+        UserModel user = UserModel.getUserModels(arrangementModel.getUserId()).get(0);
+        String message = "*[[Pemberitahuan]]*\n\n"+"Berkas "+arrangementModel.getTypeService()+" telah selesai dikerjakan. Silahkan mengambil berkas tersebut dengan membawa berkas persyaratan yang telah upload sebelumnya.";
+        BotHendler.sendMessage(user.getTelegramId(),message);
+    }
 
     @FXML
     void goBack(ActionEvent event) {
@@ -258,6 +271,8 @@ public class FormController implements Initializable {
         State state = Globe.getGlobe().getContext("DOING").getState("ON_PROCESS");
         id = state.getItem("ID_SELECTED").toString();
         System.out.println("Id Selected : "+id);
+        ArrangementModel arrangementModel = ArrangementModel.getArrangements("api_arrangement.id = "+id).get(0);
+        btnFinish.setDisable(!arrangementModel.getStatus().equals("finished"));
         Callback<ListView<FileModel>, ListCell<FileModel>> settingList = new Callback<ListView<FileModel>, ListCell<FileModel>>() {
             @Override
             public ListCell<FileModel> call(ListView<FileModel> fileModelListView) {

@@ -11,11 +11,11 @@ public class Main extends Application {
     }
 
     public void start(Stage stage) throws Exception {
-//        Parent parent = FXMLLoader.load(getClass().getResource("views/login_view.fxml"));
-//        stage.setTitle("Smart Lurah");
-//        stage.setScene(new Scene(parent));
-//        stage.show();
-        BotHendler.sendMessage("Test");
+        Parent parent = FXMLLoader.load(getClass().getResource("views/login_view.fxml"));
+        stage.setTitle("Smart Lurah");
+        stage.setScene(new Scene(parent));
+        stage.show();
+//        BotHendler.sendMessage("933322356","*[[Pemberitahuan]]*\\n\\nBerkas Surat Keterangan Pindah telah selesai dikerjakan. Silahkan mengambil berkas tersebut dengan membawa berkas persyaratan yang telah upload sebelumnya.");
     }
 }
 

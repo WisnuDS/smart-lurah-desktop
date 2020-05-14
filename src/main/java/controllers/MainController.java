@@ -2,6 +2,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import helper.Globe;
+import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +43,9 @@ public class MainController implements Initializable {
 
     @FXML
     private JFXButton btnService;
+
+    @FXML
+    private JFXButton btnLogout;
 
     @FXML
     private JFXButton btnBradcast;
@@ -90,6 +94,11 @@ public class MainController implements Initializable {
     @FXML
     void servicePage(ActionEvent event) {
         changeView("service_and_requirement_view");
+    }
+
+    @FXML
+    void logout(ActionEvent event) {
+        Helper.changePage(event,"login_view");
     }
 
     public void changeView(String view){

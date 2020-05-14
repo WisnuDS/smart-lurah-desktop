@@ -68,6 +68,10 @@
     -fx-background-image: url('../img/edit.png');
 }
 
+#logout{
+    -fx-background-image: url('../img/logout.png');
+}
+
 .buttonWithImage {
     -fx-padding: 0px 80px;
     -fx-alignment: center-left;

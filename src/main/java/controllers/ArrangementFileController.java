@@ -154,7 +154,6 @@ public class ArrangementFileController implements Initializable {
                 btnAccept.setDisable(true);
                 btnDecline.setDisable(true);
                 btnDoing.setDisable(false);
-                btnDoing.setOnAction(event2 -> changeScene(event2,"form_view"));
                 ArrangementModel model = new ArrangementModel();
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("status", "'verified'");
@@ -163,7 +162,8 @@ public class ArrangementFileController implements Initializable {
                 UserModel model2 = new UserModel();
                 model2 = (UserModel) model2.findData(model1.getUserId());
                 String message = "*[[Pemberitahuan]]*\n\n"+"Berkas persyaratan anda telah kami verifikasi. Selanjutnya "+model1.getTypeService()+" tengah dikejakan oleh petugas. Akan kami beritahukan apabila telah selesai dikerjakan.";
-                BotHendler.sendMessage(model2.getTelegramId(),message);
+                UserModel finalModel = model2;
+                new Thread(() -> BotHendler.sendMessage(finalModel.getTelegramId(),message));
                 dialog.close();
             }else {
                 btnAccept.setDisable(true);

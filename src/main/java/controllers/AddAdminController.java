@@ -1,15 +1,25 @@
 package controllers;
 
+import com.google.gson.Gson;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 
 public class AddAdminController {
 
@@ -57,7 +67,43 @@ public class AddAdminController {
 
     @FXML
     void saveAction(ActionEvent event) {
-        Helper.changeAnchorPaneScene(event,"dashboard_view");
+        try {
+            URL url = new URL("http://127.0.0.1:8000/api/create-user/?format=json");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            HashMap<String,String> hashMap = new HashMap<>();
+            hashMap.put("username",txtUsername.getText());
+            hashMap.put("password",txtPassword2.getText());
+            hashMap.put("email",txtEmail.getText());
+            hashMap.put("first_name",txtFirstName.getText());
+            hashMap.put("last_name",txtLastName.getText());
+            Gson gson = new Gson();
+            String param = gson.toJson(hashMap);
+            byte[] paramBytes = param.getBytes();
+            int length = paramBytes.length;
+            connection.setFixedLengthStreamingMode(length);
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            connection.connect();
+            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+            out.write(paramBytes);
+            out.close();
+            if (connection.getResponseCode() != 200) {
+                String failed = "Failed : HTTP Error code : " + connection.getResponseCode();
+                throw new RuntimeException(failed);
+            }
+            InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            String output;
+            String response = "";
+            while ((output = br.readLine()) != null) {
+                response = output;
+            }
+            Helper.changeAnchorPaneScene(event,"dashboard_view");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }

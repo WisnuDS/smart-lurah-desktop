@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BotHendler {
     private static String urlApi = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s&parse_mode=markdown";
-    private static final String BOT_TOKEN = "";
+    private static final String BOT_TOKEN = "1248195750:AAGoO8n9BL60v6ufS0oLKDyJDtIjuxnnI4w";
 //    private static final String chatId = "602478502";
 
     public static void sendMessage(String chatId, String message){

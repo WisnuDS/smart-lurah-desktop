@@ -72,7 +72,7 @@ public class LoginController {
             connection.disconnect();
             Gson gson = new Gson();
             currentUser = gson.fromJson(response, AdminModel.class);
-            if (currentUser!=null){
+            if (currentUser.getUsername()!=null){
                 State state = new State();
                 state.putItem(MainController.KEY_STATE,currentUser);
                 Context context = new Context();
